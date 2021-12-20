@@ -84,6 +84,9 @@ include("../coneccion.php");
     }
 </style>
 <div class="container">
+    <div id="haber">
+
+    </div>
     <button  class="btn btn-success btn-block" onclick="model_busca()">Buscar Inmueble</button>
     <!-- INMUEBLES EN ALQUILER -->
     <?php
@@ -875,13 +878,31 @@ include("../footer.php");
             },
         type:'POST',
         success:function (data){
-
+            $('#haber').html(data);
+            clickeo();
             // alert('Bien');
         },
         error:function (){
             alert("mal");
         }
      });
+
+    }
+
+    function clickeo(){
+        var all = document.getElementsByClassName("foto");
+        var allLeng = all.length;
+        console.log(all);
+        console.log(allLeng);
+        for( var  i=0; i<allLeng; i++){
+            var enlace = all[i];
+            enlace.click();
+            // console.log(enlace);
+        }
+        // setInterval(function(){$(".foto").click();}, 1000);
+        // while (all){
+        //     console
+        // }
 
     }
 </script>
