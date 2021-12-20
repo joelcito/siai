@@ -84,7 +84,7 @@ include("../coneccion.php");
     }
 </style>
 <div class="container">
-
+    <button  class="btn btn-success btn-block" onclick="model_busca()">Buscar Inmueble</button>
     <!-- INMUEBLES EN ALQUILER -->
     <?php
     if (!empty($_GET['dato'])) {
@@ -133,8 +133,8 @@ include("../coneccion.php");
                                             ON iv.agente_venta_id_agente_venta = av.id_agente_venta
                                     WHERE  alquiler_id_alquiler = $contador";
                                     #WHERE  alquiler_id_alquiler = $contador AND agente_venta_id_agente_venta = $id_agente";
-                                    echo $consultaInterna;
-                                    exit;
+                                    // echo $consultaInterna;
+                                    // exit;
             $resultadoInterno = mysqli_query($conexion, $consultaInterna);
             $numeroInterno = $resultadoInterno->num_rows;
             if ($numeroInterno != 0) {
@@ -163,6 +163,7 @@ include("../coneccion.php");
                                                 </div>
                                                 <div class="carousel-caption" style="margin-top: 0;">
                                                     <!-- <a href="#" class="btn btn-danger"><i class="fa fa-cut"></i> mas info</a> -->...
+                                                    <a class="btn btn-success btn-sm" href="../alquiler/<?=$mostrar['foto']?>" download><i class="fa fa-download"></i></a>
                                                 </div>
                                             </div>
                                         <?php
@@ -333,6 +334,11 @@ include("../coneccion.php");
                                 <?php
                                 } 
                                 ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary btn-block" type="button" onClick="downloadImage('<?=$mostrar['id_alquiler']?>','<?=$mostrar['tipo']?>')"><i class="fa fa-download"></i> Descargar Imagenes <?=$mostrar['foto']?></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -850,5 +856,32 @@ include("../footer.php");
         document.execCommand('copy')
         // Remove the textarea
         document.body.removeChild(textarea)
+    }
+
+    function model_busca(){
+        alert("en desarrollo :v");
+    }
+
+    function downloadImage(id_inmueble, inmueble){
+        // alert(id_inmueble+" <---> "+inmueble);
+        var  id = id_inmueble;
+        var inmueble = inmueble;
+
+        $.ajax({
+        url: 'downloadImage.php',
+        data: {
+                id: id, 
+                inmueble: inmueble
+            },
+        type:'POST',
+        success:function (data){
+
+            // alert('Bien');
+        },
+        error:function (){
+            alert("mal");
+        }
+     });
+
     }
 </script>
