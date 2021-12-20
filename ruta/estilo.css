@@ -1,0 +1,36 @@
+body{
+    /* background-color: aqua; */
+    background-image: url(../img/inicio/08.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-size: 400%;
+    animation: movimiento 20s infinite linear alternate;
+}
+@keyframes movimiento{
+    from{
+        background-position: bottom left;
+    }to{
+        background-position: top right;
+    }
+}
+form{
+    border: 1px;
+    border-radius: 25px;
+    border-style: solid;
+    padding: 10px;
+    background-color: #97CDDB;
+}
+.logo_sesion{
+    background-color: white;
+    border-radius: 25px;
+    opacity: 0.8;
+    padding: 2px;
+}
+.logo_sesion img{
+    width: 100%;
+}
+.my-auto{
+    background-color: #97CDDB;
+    border-radius: 15px;
+}

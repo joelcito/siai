@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Servicios de Administracion de Edificios y condominios</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="keywords" content="SIAI, Inmobiliaria, Casa en venta, Departamento en venta, Oficina en venta, Servicio de adinistracion de edificio y condominio">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../scss/main.css">
+        <link rel="stylesheet" href="../scss/skin.css">
+        <link rel="icon" href="../img/inicio/icono.png" type="image/png"/>
+        <!-- <link rel="stylesheet" href="../css/estilos.css"> -->
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="../script/index.js"></script>
+    </head>
+    <style>
+        body{
+            width: 100%;
+            background-image: url(../img/servicios/03.jpg);
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .boton{
+            background: #00b7f8;
+            border-bottom: 5px solid #0045a6;
+            border-radius: 50px;
+            box-shadow: 3px 3px 3px #999;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            font-family: 'Raleway', Arial, Helvetica;
+            font-size: 25px;
+            height: 85px;
+            margin: 60px auto;
+            padding: 20px 20px;
+            text-align: center;
+            transition: all 0.2s ease 0s;
+            width: 300px;
+        }
+        .boton:hover{
+            /* background: #0096f7; */
+            color: #ff8a00;
+        }
+        .boton:active {
+            box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+            border-bottom:1px solid #0045A6;
+            text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+            transform: translateY(4px);
+            transition: all 0.1s ease 0s;
+            /* margin: 20px auto 76px auto; */
+        }
+        a.boton{
+            background: linear-gradient(180deg, #306485 30%, #65bce8  100%);
+        }
+        .logo img{
+            box-shadow: 0 0 30px white;  
+            width: 130px;
+            border-radius: 18px;
+            padding: 5px;
+            background-color: white;
+            opacity: 0.8;
+            float: right;
+        }
+        #des {
+            width: 100px;
+            border-radius: 25px;
+            float: left;
+        }
+        #des a {
+            background-color:ivory;
+            color: black;
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+        }
+
+        #des a:hover {
+            background-color:lightblue;
+        }
+        .menu{
+            float: left;
+        }
+        hr{
+            border: 0;
+            background-color: blue;
+            height: 1px;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <br>
+            <div class="row" style="text-align: center;">
+                <div class="col-md-6">
+                    <div id="navegacion" class="menu">
+                        <a href="#" class="btn bg-info">Menú <i class="fa fa-align-justify"></i></a>
+                    </div>
+                    <div id="des">
+                        <ul>
+                            <li><a href="../">Inicio</a></li>
+                            <li><a href="../nosotros.html">Nosotros</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#exampleModal">Ingresar</a></li>
+                            <!-- <li><a href="#">Venta</a></li>
+                            <li><a href="#">Alquiler</a></li>
+                            <li><a href="#">Anticretico</a></li>
+                            <li><a href="#">Pre Venta</a></li> -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 logo">
+                    <span class="float-left">
+                        <a href="../"><img class="haber" src="../img/inicio/logo.png"  width="350px" alt="" ></a>
+                    </span>
+                </div>
+            </div>
+            <div style="color: white;" class="text-center">
+                <h4>COTIZACIÓN</h4>
+            </div>
+            <!-- modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <form method="POST" action="control.php">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Usuario:</label>
+                            <input type="text" class="form-control" id="" name="usuario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="" name="password" required>
+                        </div>
+                        <?php
+                        if (!empty($_GET['haber'])) {
+                        ?>
+                        <div class="text-center form-group" style="border-radius: 10px;background-color: #F0342B; color: white;">
+                            <?php echo $_GET["haber"];?>
+                        </div>
+                        <?php
+                            }
+                        ?>
+                        <button type="submit" class="btn btn-success">Login</button>
+                        
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end modal -->
+                
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="#" method="POST" style="background-color: white; padding: 20px; opacity: 0.8; border-radius: 25px;">
+                        <input type="hidden" value="san_cruz" name="depa">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="">Nombre de Edificio:</label>
+                                <input type="text" class="form-control" name="nombre">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Cantidad de Copropietarios:</label>
+                                <select name="cantidad" id="" class="form-control">
+                                    <option value="">Seleccione el rango</option>
+                                    <option value="">5 - 20</option>
+                                    <option value="">21 - 40</option>
+                                    <option value="">41 - 60</option>
+                                    <option value="">61 - 80</option>
+                                    <option value="">81 - 100</option>
+                                    <option value="">101 - 120</option>
+                                    <option value="">121 - 140</option>
+                                    <option value="">141 - ...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Correo:</label>
+                                <input type="email" class="form-control" name="correo">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">WhatsApp:</label>
+                                <input type="number" class="form-control" name="wap">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Direccion:</label>
+                                <textarea name="direccion" class="form-control" name="" id="" cols="30" rows="4"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Servicios:</label>
+                                <div class="row" style="border: 1px solid; border-radius: 12px;">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="informe_economico" class="form-check-input" id="exampleCheck1">
+                                            <label class="form-check-label" for="exampleCheck1" >Informe Economico</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="mantenimiento_general" class="form-check-input" id="exampleCheck2">
+                                            <label class="form-check-label" for="exampleCheck2">Mantenimiento en General</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="personeria" class="form-check-input" id="exampleCheck3">
+                                            <label class="form-check-label" for="exampleCheck3">Personeria Jurídica</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="auditoria" class="form-check-input" id="exampleCheck4">
+                                            <label class="form-check-label" for="exampleCheck4">Auditorías</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="Limpieza_vidrio" class="form-check-input" id="exampleCheck5">
+                                            <label class="form-check-label" for="exampleCheck5">Limpieza de Vidrios</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 borde">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="administracion" class="form-check-input" id="exampleCheck6">
+                                            <label class="form-check-label" for="exampleCheck6">Administración</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="porteria" class="form-check-input" id="exampleCheck7">
+                                            <label class="form-check-label" for="exampleCheck7">Portería</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="jardineria" class="form-check-input" id="exampleCheck8">
+                                            <label class="form-check-label" for="exampleCheck8">Jardinería</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="limpieza" class="form-check-input" id="exampleCheck9">
+                                            <label class="form-check-label" for="exampleCheck9">Limpieza</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="bomba" class="form-check-input" id="exampleCheck10">
+                                            <label class="form-check-label" for="exampleCheck10">Mantenimiento de Bombas de agua</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button class="btn btn-success btn-block">Cotizar</button>
+                    </form>
+                    <br>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+    $(document).ready(function(){
+        $("#des").hide();	
+        $("#navegacion").click(function(){
+            $("#des").slideToggle("slow");
+        });
+    });
+</script>

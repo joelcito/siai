@@ -1,0 +1,230 @@
+body{
+    background-image: url(../img/fondo_servicios.jpg);
+    /* background-position: center; */
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.parrafo{
+    color: white;
+    background-color: teal;
+    opacity: 0.8;
+    border-radius: 25px;
+    padding: 10px;
+}
+table{
+    border-collapse: collapse;
+    border-radius: 1em;
+    overflow: hidden;
+}
+table tr td{
+    background-color: white;
+    opacity: 0.8;
+}
+/* div h1{
+    color: red;
+} */
+
+
+/* este es el codigo de animacion de palpitante */
+
+/* Animación con keyframe llamada "latidos" */
+/* @keyframes latidos {
+    from { transform: none; }
+    50% { transform: scale(1.4); }
+    to { transform: none; }
+} */
+/* En la clase corazon vamos a llamar latidos en la animación  */
+/* .corazon {
+    display: inline-block;
+    font-size: 120%;
+    text-shadow: 0 0 10px #222,1px 1px  0 #450505; */
+    /* color: red; */
+    /* animation: latidos .9s infinite;
+    transform-origin: center;
+} */
+
+/* aqui termina la palpitacion */
+@media only screen and (min-width: 320px) and (max-width: 767px){
+    .joel1{
+        /* height: 200px; */
+        margin-left: 140px;
+    }
+}
+.joel{
+    float: left;
+
+}
+
+.boton{
+    background: #00b7f8;
+    border-bottom: 5px solid #0045a6;
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px #999;
+    color: #fff;
+    cursor: pointer;
+    display: block;  
+    font-family: 'Raleway', Arial, Helvetica;
+    font-size: 25px;
+    height: 70px;
+    margin: 10px auto;
+    padding: 15px 5px;
+    text-align: center;
+    transition: all 0.2s ease 0s;
+    width: 200px;
+}
+.boton:hover{
+    /* background: #0096f7; */
+    color: #ff8a00;
+}
+.boton:active {
+    box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+    border-bottom:1px solid #0045A6;
+    text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+    transform: translateY(4px);
+    transition: all 0.1s ease 0s;
+    margin: 20px auto 76px auto;
+}
+a.boton{
+    background: linear-gradient(180deg, #306485 30%, #65bce8  100%);
+}
+
+
+
+/* boton whatapp */
+
+.boton1{
+    background: #00bb2d;
+    border-bottom: 5px solid #666A66 ;
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px #999;
+    color: #fff;
+    cursor: pointer;
+    display: block;  
+    font-family: 'Raleway', Arial, Helvetica;
+    font-size: 17px;
+    height: 50px;
+    /* margin: 10px auto; */
+    /* padding: 15px 5px; */
+    padding: 10px;
+    text-align: center;
+    transition: all 0.2s ease 0s;
+    width: 120px;
+}
+.boton1:hover{
+    /* background: #0096f7; */
+    color: #ff8a00;
+}
+.boton1:active {
+    /* box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+    border-bottom:1px solid #0045A6;
+    text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+    transform: translateY(4px);
+    transition: all 0.1s ease 0s;
+    margin: 20px auto 76px auto; */
+}
+a.boton1{
+    background: linear-gradient(180deg, #00bb2d 30%, #61E962 100%);
+}
+
+
+/* boton correo */
+
+.boton2{
+    background: #00bb2d;
+    border-bottom: 5px solid #666A66 ;
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px #999;
+    color: #fff;
+    cursor: pointer;
+    display: block;  
+    font-family: 'Raleway', Arial, Helvetica;
+    font-size: 18px;
+    height: 50px;
+    /* margin: 10px auto; */
+    /* padding: 15px 5px; */
+    padding: 10px;
+    text-align: center;
+    transition: all 0.2s ease 0s;
+    width: 120px;
+    margin-right: 14px;
+}
+.boton2:hover{
+    /* background: #0096f7; */
+    color: #ff8a00;
+}
+.boton2:active {
+    /* box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+    border-bottom:1px solid #0045A6;
+    text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+    transform: translateY(4px);
+    transition: all 0.1s ease 0s;
+    margin: 20px auto 76px auto; */
+}
+a.boton2{
+    background: linear-gradient(180deg, #EFB532  30%, #EFD832  100%);
+}
+.titulo{
+    text-shadow: 0 0 30px #fff;
+    color: red;
+    /* text-shadow: -1px 3px #000000; */
+    
+}
+
+/* boton de precion */
+.botonPrecios{
+    background: #00b7f8;
+    border-bottom: 5px solid #0045a6;
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px #999;
+    color: #fff;
+    cursor: pointer;
+    display: block;  
+    font-family: 'Raleway', Arial, Helvetica;
+    font-size: 25px;
+    height: 60px;
+    margin: 10px auto;
+    padding: 15px 5px;
+    text-align: center;
+    transition: all 0.2s ease 0s;
+    width: 120px;
+}
+.botonPrecios:hover{
+    /* background: #0096f7; */
+    color: #ff8a00;
+}
+.botonPrecios:active {
+    box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+    border-bottom:1px solid #0045A6;
+    text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+    transform: translateY(4px);
+    transition: all 0.1s ease 0s;
+    margin: 20px auto 76px auto;
+}
+a.botonPrecios{
+    background: linear-gradient(180deg, #306485 30%, #65bce8  100%);
+}
+/* end boton de precios */
+div .lista{
+    text-align: justify;
+    background-color: teal;
+    border-radius: 25px;
+    opacity: 0.8;
+    color: white;
+    padding: 10px;
+}
+body .flotante{
+    display:scroll;
+    position:fixed;
+    z-index: 1;
+    margin-top: 10px;
+    margin-left: 25px;
+    background-color: #AAE7BD;
+    padding: 5px;
+    /* position: absolute; */
+    /* bottom:320px; */
+    /* right:0px; */
+}
+body .flotante .aa{
+    color: green;
+}

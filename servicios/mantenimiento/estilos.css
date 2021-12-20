@@ -1,0 +1,166 @@
+body{
+    background-image: url(../img/fondo_servicios.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    /* background-position: center; */
+    background-size: cover;
+}
+body .titulo h1{
+    /* text-shadow: 0 0 100px #fff;
+    color: white;
+    margin-left: 10px; */
+
+    font-weight: bold;
+    font-size: 35px;
+    font-family: "Arial";
+    text-shadow: 0 1px 0 #ccc, 
+                0 2px 0 #c9c9c9,
+                0 3px 0 #bbb,
+                0 4px 0 #b9b9b9,
+                /* 0 5px 0 #aaa, */
+                0 6px 1px rgba(0,0,0,.1),
+                0 0 5px rgba(0,0,0,.1),
+                0 1px 3px rgba(0,0,0,.3),
+                0 3px 5px rgba(0,0,0,.2),
+                0 5px 10px rgba(0,0,0,.25),
+                0 10px 10px rgba(0,0,0,.2),
+                0 20px 20px rgba(0,0,0,.15);
+                ;
+    color: #FFF;
+    text-align: center;
+}
+body .flotante{
+    display:scroll;
+    position:fixed;
+    z-index: 1;
+    margin-top: 15px;
+    margin-left: 0px;
+    padding-left: 50px;
+    background-color: #AAE7BD;
+    padding: 5px;
+    /* position: absolute; */
+    /* bottom:320px; */
+    /* right:0px; */
+}
+body .flotante .aa{
+    color: green;
+}
+/* sub_titutlo */
+.sub_titulo{
+    background-color: blueviolet;
+    padding: 5px;
+    border-radius: 10px;
+    opacity: 0.8;
+    color: white;
+    text-align: center;
+}
+/* end sub_titutlo*/
+/* remodelacion */
+.remodelacion{
+    background-color: white;
+    border-radius: 25px;
+    opacity: 0.8;
+}
+.remodelacion div h3{
+    color: black;
+    text-align: center;
+}
+.remodelacion div p{
+    color: black;
+    text-align: center;
+    font-size: 100%;
+}
+/* end remodelacion */
+
+/* responsivo */
+@media only screen and (min-width: 320px) and (max-width: 767px){
+    .joel1{
+        margin-left: 180px;
+    }
+    .joel{
+        margin-left: 25px;
+    }
+    .col-md-2{
+        padding: 13px;
+    }
+}
+.joel{
+    float: left;
+
+}
+
+/* enf responsivo */
+
+/* boton whatsApp */
+.boton1{
+    background: #00bb2d;
+    border-bottom: 5px solid #666A66 ;
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px #999;
+    color: #fff;
+    cursor: pointer;
+    display: block;  
+    font-family: 'Raleway', Arial, Helvetica;
+    font-size: 17px;
+    height: 50px;
+    /* margin: 10px auto; */
+    /* padding: 15px 5px; */
+    padding: 10px;
+    text-align: center;
+    transition: all 0.2s ease 0s;
+    width: 120px;
+}
+.boton1:hover{
+    /* background: #0096f7; */
+    color: #ff8a00;
+}
+.boton1:active {
+    /* box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+    border-bottom:1px solid #0045A6;
+    text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+    transform: translateY(4px);
+    transition: all 0.1s ease 0s;
+    margin: 20px auto 76px auto; */
+}
+a.boton1{
+    background: linear-gradient(180deg, #00bb2d 30%, #61E962 100%);
+}
+/* end boton whatsApp */
+
+/* boton correo */
+
+.boton2{
+    background: #00bb2d;
+    border-bottom: 5px solid #666A66 ;
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px #999;
+    color: #fff;
+    cursor: pointer;
+    display: block;  
+    font-family: 'Raleway', Arial, Helvetica;
+    font-size: 18px;
+    height: 50px;
+    /* margin: 10px auto; */
+    /* padding: 15px 5px; */
+    padding: 10px;
+    text-align: center;
+    transition: all 0.2s ease 0s;
+    width: 120px;
+    margin-right: 14px;
+}
+.boton2:hover{
+    /* background: #0096f7; */
+    color: #ff8a00;
+}
+.boton2:active {
+    /* box-shadow: 2px 2px 2px 2px #777, 0px 0px 35px 0px #00b7f8;
+    border-bottom:1px solid #0045A6;
+    text-shadow:  0px 0px 5px #fff, 0px 0px 5px #fff;
+    transform: translateY(4px);
+    transition: all 0.1s ease 0s;
+    margin: 20px auto 76px auto; */
+}
+a.boton2{
+    background: linear-gradient(180deg, #EFB532  30%, #EFD832  100%);
+}
+/* end boton correo */
