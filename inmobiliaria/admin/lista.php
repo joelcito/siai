@@ -84,6 +84,7 @@ include("../coneccion.php");
     }
 </style>
 <div class="container">
+
     <!-- INMUEBLES EN ALQUILER -->
     <?php
     if (!empty($_GET['dato'])) {
@@ -112,7 +113,8 @@ include("../coneccion.php");
     <?php
     $id_agente = $_SESSION['id_agente_venta'];
     // echo $id_agente;
-    $consulta  = "SELECT * FROM inmueble_alquiler WHERE agente_venta_id_agente_venta = $id_agente";
+    // $consulta  = "SELECT * FROM inmueble_alquiler WHERE agente_venta_id_agente_venta = $id_agente";
+    $consulta  = "SELECT * FROM inmueble_alquiler";
     $resultado = mysqli_query($conexion, $consulta);
     $numero = $resultado->num_rows;
     if ($numero > 0) {
@@ -129,13 +131,16 @@ include("../coneccion.php");
                                     FROM inmueble_alquiler iv INNER JOIN foto_alquiler ft
                                         ON (iv.id_alquiler = ft.alquiler_id_alquiler) INNER JOIN agente_venta av
                                             ON iv.agente_venta_id_agente_venta = av.id_agente_venta
-                                    WHERE  alquiler_id_alquiler = $contador AND agente_venta_id_agente_venta = $id_agente";
+                                    WHERE  alquiler_id_alquiler = $contador";
+                                    #WHERE  alquiler_id_alquiler = $contador AND agente_venta_id_agente_venta = $id_agente";
+                                    echo $consultaInterna;
+                                    exit;
             $resultadoInterno = mysqli_query($conexion, $consultaInterna);
             $numeroInterno = $resultadoInterno->num_rows;
             if ($numeroInterno != 0) {
         ?>
                 <div class="row">
-                    <div class="col-md-12" style="background-position: center;" id="iner<?= $i ?>">
+                    <div class="col-md-12" style="background-position: center;" id="iner<?="IAQ" ?>">
                         <br>
                         <!-- <h3>
                                 <?//php echo "Este es el i ".$i."<br>este es el contador ".$contador;?>
@@ -271,57 +276,63 @@ include("../coneccion.php");
                                     ?>
                                     <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $mostrar['garantia'] ?>
                                 </h4>
+                                <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
                                 </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
-                                    </div>
-                                    <div class="col-md-3" style="float: none;">
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_alquiler'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-success btl-lg boton1"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a class="boton" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_alquiler'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                                            </div>
-                                            <!-- <div class="col-md-6">
-                                                        <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a>                                            
+                                <?php
+                                if($_SESSION['nivel'] == 1){
+                                ?>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_alquiler'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_alquiler'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                        </div>
+                                        <!-- <div class="col-md-6">
+                                            <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
+                                        </div> -->
+                                            <!-- <div class="col-md-3" style="float: none; background-color: yellow;">
+                                                <br>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_alquiler'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-success btl-lg boton1"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <a class="boton" href="https://api.whatsapp.com/send?phone=591<?= $mostrar['celular']; ?>&text=Estoy%20interesado%20en%20el%20inmueble,%20por%20favor%20podría%20ampliar%20algo%20mas%20de%20de%20informacion?">
-                                                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Editar
-                                                        </a>
-                                                    </div> -->
-                                        </div>
+                                                        <a class="boton" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_alquiler'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-md-3" style="float: right;">
+                                                <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
+                                                        <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
+                                                <a href="compartir.php?id=<?//php echo $mostrar['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                                        <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center>
+                                            </div> -->
                                     </div>
-                                    <div class="col-md-3" style="float: right;">
-                                        <!-- <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
-                                                <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a> -->
-                                        <!-- <a href="compartir.php?id=<?//php echo $mostrar['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                                <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
+                                    <div id="to-copy<?php echo $i ?>" class="d-none">
+                                        https://www.siai.com.bo/inmobiliaria/alquiler/mostrar.php<?php echo "?id=" . $mostrar['id_alquiler'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
                                     </div>
-                                </div>
-                                <div id="to-copy<?php echo $i ?>" class="d-none">
-                                    https://www.siai.com.bo/inmobiliaria/alquiler/mostrar.php<?php echo "?id=" . $mostrar['id_alquiler'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
-                                </div>
-                                <center>
+                                    <center>
+                                        <br>
+                                        <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
+                                        <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_alquiler'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
+                                        <?php
+                                        if ($mostrar['pdf'] != NULL) {
+                                        ?>
+                                            <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
+                                        <?php
+                                        }
+                                        ?>
+                                    </center>
                                     <br>
-                                    <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
-                                    <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_alquiler'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
-                                    <?php
-                                    if ($mostrar['pdf'] != NULL) {
-                                    ?>
-                                        <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
-                                    <?php
-                                    }
-                                    ?>
-                                </center>
-                                <br>
+                                <?php
+                                } 
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -339,7 +350,8 @@ include("../coneccion.php");
     <!-- INMUEBLES EN VENTA -->
     <?php
     // echo $id_agente;
-    $consulta  = "SELECT * FROM inmueble_venta WHERE agente_venta_id_agente_venta = $id_agente";
+    // $consulta  = "SELECT * FROM inmueble_venta WHERE agente_venta_id_agente_venta = $id_agente";
+    $consulta  = "SELECT * FROM inmueble_venta";
     $resultado = mysqli_query($conexion, $consulta);
     $numero = $resultado->num_rows;
     if ($numero > 0) {
@@ -356,7 +368,8 @@ include("../coneccion.php");
                                     FROM inmueble_venta iv INNER JOIN foto_venta ft
                                         ON (iv.id_venta = ft.venta_id_venta) INNER JOIN agente_venta av
                                             ON iv.agente_venta_id_agente_venta = av.id_agente_venta
-                                    WHERE  venta_id_venta = $contador AND agente_venta_id_agente_venta = $id_agente";
+                                    WHERE  venta_id_venta = $contador";
+                                    #WHERE  venta_id_venta = $contador AND agente_venta_id_agente_venta = $id_agente";
             $resultadoInterno = mysqli_query($conexion, $consultaInterna);
             $numeroInterno = $resultadoInterno->num_rows;
             if ($numeroInterno != 0) {
@@ -498,57 +511,67 @@ include("../coneccion.php");
                                     ?>
                                     <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $mostrar['garantia'] ?>
                                 </h4>
+                                <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
                                 </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
-                                    </div>
-                                    <div class="col-md-3" style="float: none;">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-success btl-lg boton1"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                                                <!-- <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a> -->
+                                <?php
+                                if($_SESSION['nivel'] == 1 ){
+                                ?>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                        </div>
+                                        <!-- <div class="col-md-3" style="float: none;">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a>                                            
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a class="boton" href="https://api.whatsapp.com/send?phone=591<?= $mostrar['celular']; ?>&text=Estoy%20interesado%20en%20el%20inmueble,%20por%20favor%20podría%20ampliar%20algo%20mas%20de%20de%20informacion?">
+                                                        <i class="fa fa-whatsapp" aria-hidden="true"></i> Editar
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <a class="boton" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                                            </div>
-                                            <!-- <div class="col-md-6">
-                                                        <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a>                                            
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <a class="boton" href="https://api.whatsapp.com/send?phone=591<?= $mostrar['celular']; ?>&text=Estoy%20interesado%20en%20el%20inmueble,%20por%20favor%20podría%20ampliar%20algo%20mas%20de%20de%20informacion?">
-                                                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Editar
-                                                        </a>
-                                                    </div> -->
+                                        </div> -->
+                                        <div class="col-md-3" style="float: right;">
+                                            <!-- <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
+                                                    <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a> -->
+                                            <!-- <a href="compartir.php?id=<?//php echo $mostrar['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                                    <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
                                         </div>
                                     </div>
-                                    <div class="col-md-3" style="float: right;">
-                                        <!-- <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
-                                                <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a> -->
-                                        <!-- <a href="compartir.php?id=<?//php echo $mostrar['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                                <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
+                                    <div id="to-copy<?php echo $i ?>" class="d-none">
+                                        https://www.siai.com.bo/inmobiliaria/venta/mostrar.php<?php echo "?id=" . $mostrar['id_venta'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
                                     </div>
-                                </div>
-                                <div id="to-copy<?php echo $i ?>" class="d-none">
-                                    https://www.siai.com.bo/inmobiliaria/venta/mostrar.php<?php echo "?id=" . $mostrar['id_venta'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
-                                </div>
-                                <center>
+                                    <center>
+                                        <br>
+                                        <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
+                                        <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_venta'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
+                                        <?php
+                                        if ($mostrar['pdf'] != NULL) {
+                                        ?>
+                                            <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
+                                        <?php
+                                        }
+                                        ?>
+                                    </center>
                                     <br>
-                                    <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
-                                    <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_venta'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
-                                    <?php
-                                    if ($mostrar['pdf'] != NULL) {
-                                    ?>
-                                        <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
-                                    <?php
-                                    }
-                                    ?>
-                                </center>
-                                <br>
+                                <?php
+                                }
+                                ?>
+                                
                             </div>
                         </div>
                     </div>
@@ -565,7 +588,8 @@ include("../coneccion.php");
     <!-- INMUEBLES EN ANTICRETICO -->
     <?php
     // echo $id_agente;
-    $consulta  = "SELECT * FROM inmueble_anticretico WHERE agente_venta_id_agente_venta = $id_agente";
+    // $consulta  = "SELECT * FROM inmueble_anticretico WHERE agente_venta_id_agente_venta = $id_agente";
+    $consulta  = "SELECT * FROM inmueble_anticretico";
     $resultado = mysqli_query($conexion, $consulta);
     $numero = $resultado->num_rows;
     if ($numero > 0) {
@@ -582,7 +606,8 @@ include("../coneccion.php");
                                     FROM inmueble_anticretico iv INNER JOIN foto_anticretico ft
                                         ON (iv.id_anticretico = ft.anticretico_id_anticretico) INNER JOIN agente_venta av
                                             ON iv.agente_venta_id_agente_venta = av.id_agente_venta
-                                    WHERE  anticretico_id_anticretico = $contador AND agente_venta_id_agente_venta = $id_agente";
+                                    WHERE  anticretico_id_anticretico = $contador";
+                                    #WHERE  anticretico_id_anticretico = $contador AND agente_venta_id_agente_venta = $id_agente";
             $resultadoInterno = mysqli_query($conexion, $consultaInterna);
             $numeroInterno = $resultadoInterno->num_rows;
             if ($numeroInterno != 0) {
@@ -724,57 +749,42 @@ include("../coneccion.php");
                                     ?>
                                     <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $mostrar['garantia'] ?>
                                 </h4>
+                                <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
                                 </p>
+                                <?php
+                                if($_SESSION['nivel'] == 1){
+                                ?>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
+                                        <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_anticretico'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
                                     </div>
-                                    <div class="col-md-3" style="float: none;">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <!-- <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a> -->
-                                                <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_anticretico'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-success btl-lg boton1"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a class="boton" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_anticretico'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                                            </div>
-                                            <!-- <div class="col-md-6">
-                                                        <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a>                                            
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <a class="boton" href="https://api.whatsapp.com/send?phone=591<?= $mostrar['celular']; ?>&text=Estoy%20interesado%20en%20el%20inmueble,%20por%20favor%20podría%20ampliar%20algo%20mas%20de%20de%20informacion?">
-                                                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Editar
-                                                        </a>
-                                                    </div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3" style="float: right;">
-                                        <!-- <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
-                                                <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a> -->
-                                        <!-- <a href="compartir.php?id=<?//php echo $mostrar['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                                <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
+                                    <div class="col-md-6">
+                                        <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_anticretico'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
                                     </div>
                                 </div>
                                 <div id="to-copy<?php echo $i ?>" class="d-none">
                                     https://www.siai.com.bo/inmobiliaria/anticretico/mostrar.php<?php echo "?id=" . $mostrar['id_anticretico'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
                                 </div>
                                 <center>
-                                    <br>
-                                    <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
-                                    <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_anticretico'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
-                                    <?php
-                                    if ($mostrar['pdf'] != NULL) {
-                                    ?>
-                                        <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
-                                    <?php
-                                    }
-                                    ?>
+                                <br>
+                                <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
+                                <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_anticretico'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
+                                <?php
+                                if ($mostrar['pdf'] != NULL) {
+                                ?>
+                                    <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
+                                <?php
+                                } else {
+                                ?>
+                                    <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
+                                <?php
+                                }
+                                ?>
                                 </center>
                                 <br>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
