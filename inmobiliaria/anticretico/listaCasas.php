@@ -312,7 +312,9 @@
                                         $x = 1;
                                         while($mostrar = mysqli_fetch_array($resultado)){
                                     ?>
-                                        <label for="<?=$x?>" class="form-control"><?=$mostrar['zona']?>  <input type="checkbox" name="zona[]" value="<?=$mostrar['zona']?>" id="<?=$x?>"></label>
+                                        <label for="<?=$x?>" class="form-control"><?=$mostrar['zona']?>  
+                                            <input type="checkbox" name="zona[]" value="<?=$mostrar['zona']?>" id="<?=$x?>">
+                                        </label>
                                     <?php
                                         $x++;
                                         }
