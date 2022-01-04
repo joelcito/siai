@@ -1030,6 +1030,7 @@ include("../seguridad.php");
                 </div>
             </div>
             <?php
+                $i++;
             }
             ?>
         </div>
