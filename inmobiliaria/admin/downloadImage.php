@@ -5,7 +5,7 @@
     $inmueble = $_POST['inmueble'];
     $id_alquiler = $_POST['id'];
 
-    $consulta = "SELECT *  FROM foto_".$inmueble." WHERE alquiler_id_alquiler = ".$id_alquiler;
+    $consulta = "SELECT *  FROM foto_".$inmueble." WHERE ".$inmueble."_id_".$inmueble." = ".$id_alquiler;
 
     // if(mysqli_query($conexion,$consulta)){
     //     echo 'si';

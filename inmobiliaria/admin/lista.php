@@ -558,461 +558,482 @@ include("../seguridad.php");
                 }
             }
             ?>
-            <hr>
             <!-- END INMUEBLES EN ALQUILER -->
         </div>
 
         <hr>
-        <!-- INMUEBLES EN VENTA -->
-        <?php
-        // echo $id_agente;
-        // $consulta  = "SELECT * FROM inmueble_venta WHERE agente_venta_id_agente_venta = $id_agente";
-        $consulta  = "SELECT * FROM inmueble_venta";
-        $resultado = mysqli_query($conexion, $consulta);
-        $numero = $resultado->num_rows;
-        if ($numero > 0) {
-        ?>
+
+        <div id="bloque-inmuebles-venta">
+
+            <!-- INMUEBLES EN VENTA -->
+            <?php
+
+            $queryNewVenta = "SELECT *  FROM inmueble_venta";
+
+            if(isset($_GET['zona'])){
+                $zona = implode("','",$_GET['zona']);
+                $queryNewVenta.=" WHERE zona IN('".$zona."')";
+            }
+
+            $resultadoNewVenta = mysqli_query($conexion, $queryNewVenta);
+
+            $cantidadBusquedaNewVenta = $resultadoNewVenta->num_rows;
+
+            if($cantidadBusquedaNewVenta > 0 ){
+            ?>
             <center>
                 <h3 style="color: white;">Inmuebles en Venta</h3>
             </center>
             <?php
-            $i = 1;
-            $contador = 1;
-            $ghu = 1;
-            while ($i <= $numero) {
-                $consultaInterna = "SELECT * 
-                                        FROM inmueble_venta iv INNER JOIN foto_venta ft
-                                            ON (iv.id_venta = ft.venta_id_venta) INNER JOIN agente_venta av
-                                                ON iv.agente_venta_id_agente_venta = av.id_agente_venta
-                                        WHERE  venta_id_venta = $contador";
-                                        #WHERE  venta_id_venta = $contador AND agente_venta_id_agente_venta = $id_agente";
-                $resultadoInterno = mysqli_query($conexion, $consultaInterna);
-                $numeroInterno = $resultadoInterno->num_rows;
-                if ($numeroInterno != 0) {
-            ?>
-                    <div class="row">
-                        <div class="col-md-12" style="background-position: center;" id="iner<?= $i ?>">
-                            <br>
-                            <!-- <h3>
-                                    <?//php echo "Este es el i ".$i."<br>este es el contador ".$contador;?>
-                                </h3> -->
-                            <div class="row tiempo" style="border-style: inset; border-color: burlywood; margin-left: 0;margin-right: 0;">
-                                <div class="col-md-8" style="margin-right: 0; margin-top: 0;margin-left: 0; padding: 0px;">
-                                    <div id="carouselExampleIndicators<?php echo $i ?>" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <?php
-                                            for ($j = 1; $j <= $numeroInterno; $j++) {
-                                                $mostrar = mysqli_fetch_array($resultadoInterno);
-                                            ?>
-                                                <div class="carousel-item <?php if ($j == 1) {
-                                                                                echo 'active';
-                                                                            } ?>">
-                                                    <div style="background-color: white;" align="center" id="cajaFoto">
-                                                        <!-- <img src="data:image/jpg;base64,<?php //echo base64_encode($mostrar['foto']);
-                                                                                                ?>" height="100%" class="kol"/> -->
-                                                        <img src="<?php echo "../venta/" . $mostrar['foto'] ?>" alt="Aqui va la imagen" height="100%" class="d-block">
-                                                    </div>
-                                                    <div class="carousel-caption" style="margin-top: 0;">
-                                                        <!-- <a href="#" class="btn btn-danger"><i class="fa fa-cut"></i> mas info</a> -->...
-                                                    </div>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
-                                        <!-- Controls -->
-                                        <a class="carousel-control-prev" href="#carouselExampleIndicators<?php echo $i ?>" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleIndicators<?php echo $i ?>" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                        <!-- <a class="left carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="prev">
-                                                    <i class="fa fa-chevron-circle-left" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 ;"></i>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="right carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="next">
-                                                    <i class="fa fa-chevron-circle-right" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 "></i>
-                                                    <span class="sr-only">Next</span>
-                                                </a> -->
-                                    </div>
-                                </div>
-                                <div class="col-md-4 kol" style=" background-color: white; opacity: 0.7; color: black; margin-top: 0;">
-                                    <h2 style="color: black;"> <?php echo $mostrar['inmueble'] . " en " . $mostrar['tipo']; ?></h2>
-                                    <p>
-                                    <h4>
-                                        <i class="fa fa-map-marker" aria-hidden="true" style="color: #FF0000 ;"></i> En la Zona <?php echo $mostrar['zona'] ?><br>
-                                        <i class="fa fa-eraser" aria-hidden="true" style="color: ;"></i> <?php echo $mostrar['metraje'] ?>m<sup>2</sup> <br>
-                                        <!-- <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php //echo $mostrar['dormitorio']
-                                                                                                                    ?> dormitorios<br> -->
-                                        <?php
-                                        if ($mostrar['dormitorio'] > 0) {
-                                            if ($mostrar['dormitorio'] == 1) {
-                                        ?>
-                                                <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $mostrar['dormitorio'] ?> dormitorio<br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $mostrar['dormitorio'] ?> dormitorios<br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['cocina'] > 0) {
-                                            if ($mostrar['cocina'] == 1) {
-                                        ?>
-                                                <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $mostrar['cocina'] ?> cocina <br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $mostrar['cocina'] ?> cocinas <br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['7'] > 0) {
-                                            if ($mostrar['7'] == 1) {
-                                        ?>
-                                                <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $mostrar['7'] ?> baño<br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $mostrar['7'] ?> baños<br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['baulera'] > 0) {
-                                            if ($mostrar['baulera'] == 1) {
-                                        ?>
-                                                <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $mostrar['baulera'] ?> baulera<br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $mostrar['baulera'] ?> bauleras<br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['lavanderia'] > 0) {
-                                            if ($mostrar['lavanderia'] == 1) {
-                                        ?>
-                                                <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $mostrar['lavanderia'] ?> Lavanderia <br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $mostrar['lavanderia'] ?> Lavanderias <br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['garaje'] > 0) {
-                                            if ($mostrar['garaje'] == 1) {
-                                        ?>
-                                                <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $mostrar['garaje'] ?> parqueo <br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $mostrar['garaje'] ?> parqueo <br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $mostrar['garantia'] ?>
-                                    </h4>
-                                    <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
-                                    </p>
+            }
+
+            $i = 1 ;
+
+            while($datosVenta = mysqli_fetch_array($resultadoNewVenta)){
+            ?>            
+                <div class="row">
+                    <div class="col-md-12" style="background-position: center;" id="iner<?= $i ?>">
+                        <br>
+                        <!-- <h3>
+                                <?//php echo "Este es el i ".$i."<br>este es el contador ".$contador;?>
+                            </h3> -->
+                        <div class="row tiempo" style="border-style: inset; border-color: burlywood; margin-left: 0;margin-right: 0;">
+                            <div class="col-md-8" style="margin-right: 0; margin-top: 0;margin-left: 0; padding: 0px;">
+                                <div id="carouselExampleIndicatorsVenta<?php echo $i ?>" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+
                                     <?php
-                                    if($_SESSION['nivel'] == 1 ){
+                                        $id = $datosVenta['id_venta'];
+
+                                        $queryFotosVenta = "SELECT *  FROM foto_venta WHERE venta_id_venta = $id";
+
+                                        $ressultadoFotosVenta = mysqli_query($conexion, $queryFotosVenta);
+
+                                        $j = 1 ;
+
+                                        while($datosFotosVenta = mysqli_fetch_array($ressultadoFotosVenta)){
+                                        ?>
+                                            <div class="carousel-item <?php if ($j == 1) {echo 'active';} ?>">
+                                                <div style="background-color: white;" align="center" id="cajaFoto">
+                                                    <!-- <img src="data:image/jpg;base64,<?php //echo base64_encode($mostrar['foto']);
+                                                                                            ?>" height="100%" class="kol"/> -->
+                                                    <img src="<?php echo "../venta/" . $datosFotosVenta['foto'] ?>" alt="Aqui va la imagen" height="100%" class="d-block">
+                                                </div>
+                                                <div class="carousel-caption" style="margin-top: 0;">
+                                                    <!-- <a href="#" class="btn btn-danger"><i class="fa fa-cut"></i> mas info</a> -->...
+                                                </div>
+                                            </div>
+                                        <?php
+                                        $j++;
+                                        }
                                     ?>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                                            </div>
-                                            <!-- <div class="col-md-3" style="float: none;">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_venta'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a>                                            
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <a class="boton" href="https://api.whatsapp.com/send?phone=591<?= $mostrar['celular']; ?>&text=Estoy%20interesado%20en%20el%20inmueble,%20por%20favor%20podría%20ampliar%20algo%20mas%20de%20de%20informacion?">
-                                                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Editar
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            <div class="col-md-3" style="float: right;">
-                                                <!-- <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
-                                                        <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a> -->
-                                                <!-- <a href="compartir.php?id=<?//php echo $mostrar['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                                        <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
-                                            </div>
-                                        </div>
-                                        <div id="to-copy<?php echo $i ?>" class="d-none">
-                                            https://www.siai.com.bo/inmobiliaria/venta/mostrar.php<?php echo "?id=" . $mostrar['id_venta'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
-                                        </div>
-                                        <center>
-                                            <br>
-                                            <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
-                                            <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_venta'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
-                                            <?php
-                                            if ($mostrar['pdf'] != NULL) {
-                                            ?>
-                                                <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
-                                            <?php
-                                            }
-                                            ?>
-                                        </center>
-                                        <br>
+                                    </div>
+                                    <!-- Controls -->
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicatorsVenta<?php echo $i ?>" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicatorsVenta<?php echo $i ?>" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    <!-- <a class="left carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="prev">
+                                                <i class="fa fa-chevron-circle-left" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 ;"></i>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="right carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="next">
+                                                <i class="fa fa-chevron-circle-right" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 "></i>
+                                                <span class="sr-only">Next</span>
+                                            </a> -->
+                                </div>
+                            </div>
+                            <div class="col-md-4 kol" style=" background-color: white; opacity: 0.7; color: black; margin-top: 0;">
+                                <h2 style="color: black;"> <?php echo $datosVenta['inmueble'] . " en " . $datosVenta['tipo']; ?></h2>
+                                <p>
+                                <h4>
+                                    <i class="fa fa-map-marker" aria-hidden="true" style="color: #FF0000 ;"></i> En la Zona <?php echo $datosVenta['zona'] ?><br>
+                                    <i class="fa fa-eraser" aria-hidden="true" style="color: ;"></i> <?php echo $datosVenta['metraje'] ?>m<sup>2</sup> <br>
+                                    <!-- <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php //echo $datosVenta['dormitorio']
+                                                                                                                ?> dormitorios<br> -->
                                     <?php
+                                    if ($datosVenta['dormitorio'] > 0) {
+                                        if ($datosVenta['dormitorio'] == 1) {
+                                    ?>
+                                            <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $datosVenta['dormitorio'] ?> dormitorio<br>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $datosVenta['dormitorio'] ?> dormitorios<br>
+                                    <?php
+                                        }
                                     }
                                     ?>
-                                    
+                                    <?php
+                                    if ($datosVenta['cocina'] > 0) {
+                                        if ($datosVenta['cocina'] == 1) {
+                                    ?>
+                                            <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $datosVenta['cocina'] ?> cocina <br>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $datosVenta['cocina'] ?> cocinas <br>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($datosVenta['7'] > 0) {
+                                        if ($datosVenta['7'] == 1) {
+                                    ?>
+                                            <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $datosVenta['7'] ?> baño<br>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $datosVenta['7'] ?> baños<br>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($datosVenta['baulera'] > 0) {
+                                        if ($datosVenta['baulera'] == 1) {
+                                    ?>
+                                            <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $datosVenta['baulera'] ?> baulera<br>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $datosVenta['baulera'] ?> bauleras<br>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($datosVenta['lavanderia'] > 0) {
+                                        if ($datosVenta['lavanderia'] == 1) {
+                                    ?>
+                                            <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $datosVenta['lavanderia'] ?> Lavanderia <br>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $datosVenta['lavanderia'] ?> Lavanderias <br>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($datosVenta['garaje'] > 0) {
+                                        if ($datosVenta['garaje'] == 1) {
+                                    ?>
+                                            <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $datosVenta['garaje'] ?> parqueo <br>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $datosVenta['garaje'] ?> parqueo <br>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $datosVenta['garantia'] ?>
+                                </h4>
+                                <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($datosVenta['precio']) . " " . $datosVenta['cambio']; ?> </b></h3>
+                                </p>
+                                <?php
+                                if($_SESSION['nivel'] == 1 ){
+                                ?>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="eliminarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                        </div>
+                                        <!-- <div class="col-md-3" style="float: none;">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <a href="eliminarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="#" class="btn btn-success btl-lg boton1"><i class="fa fa-youtube-play" aria-hidden="true"></i>Eliminar</a>                                            
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a class="boton" href="https://api.whatsapp.com/send?phone=591<?= $datosVenta['celular']; ?>&text=Estoy%20interesado%20en%20el%20inmueble,%20por%20favor%20podría%20ampliar%20algo%20mas%20de%20de%20informacion?">
+                                                        <i class="fa fa-whatsapp" aria-hidden="true"></i> Editar
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-3" style="float: right;">
+                                            <!-- <a href="#iner<?//=($i-1)?>"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
+                                                    <a href="#iner<?//=($i+1)?>"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a> -->
+                                            <!-- <a href="compartir.php?id=<?//php echo $datosVenta['id_alquiler'];?>"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                                    <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
+                                        </div>
+                                    </div>
+                                    <div id="to-copy<?php echo $i ?>" class="d-none">
+                                        https://www.siai.com.bo/inmobiliaria/venta/mostrar.php<?php echo "?id=" . $datosVenta['id_venta'] . "&" . "inmueble=" . $datosVenta['inmueble']; ?>
+                                    </div>
+                                    <center>
+                                        <br>
+                                        <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
+                                        <a href="<?php echo "../" . $datosVenta['tipo'] . "/" . $datosVenta['pdf'] ?>" download="<?php echo "browsour" . $datosVenta['inmueble'] . $datosVenta['id_venta'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
+                                        <?php
+                                        if ($datosVenta['pdf'] != NULL) {
+                                        ?>
+                                            <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
+                                        <?php
+                                        }
+                                        ?>
+                                    </center>
+                                    <br>
+                                <?php
+                                }
+                                ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary btn-block" type="button" onClick="downloadImage('<?=$datosVenta['id_venta']?>','<?=$datosVenta['tipo']?>')"><i class="fa fa-download"></i> Descargar Imagenes</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br><br>
-        <?php
-                    $i++;
-                }
-                $contador++;
+                </div>
+            <?php
+                $i++;
             }
-        }
-        ?>
-        <!-- END INMUEBLES EN VENTA -->
+            ?>
+            <!-- END INMUEBLES EN VENTA -->
+
+        </div>
+
         <!-- INMUEBLES EN ANTICRETICO -->
-        <?php
-        // echo $id_agente;
-        // $consulta  = "SELECT * FROM inmueble_anticretico WHERE agente_venta_id_agente_venta = $id_agente";
-        $consulta  = "SELECT * FROM inmueble_anticretico";
-        $resultado = mysqli_query($conexion, $consulta);
-        $numero = $resultado->num_rows;
-        if ($numero > 0) {
-        ?>
+
+        <div id="bloque-inmuebles-anticretico">
+            <?php
+
+            $queryNewAnticretico = "SELECT *  FROM inmueble_anticretico";
+
+            if(isset($_GET['zona'])){
+                $zona = implode("','",$_GET['zona']);
+                $queryNewAnticretico.=" WHERE zona IN('".$zona."')";
+            }
+
+            $resultadoNewAnticretico = mysqli_query($conexion, $queryNewAnticretico);
+
+            $cantidadBusquedaNewAnticretico = $resultadoNewAnticretico->num_rows;
+
+            if($cantidadBusquedaNewAnticretico > 0 ){
+            ?>
             <center>
                 <h3 style="color: white;">Inmuebles en Anticretico</h3>
             </center>
             <?php
-            $i = 1;
-            $contador = 1;
-            $ghu = 1;
-            while ($i <= $numero) {
-                $consultaInterna = "SELECT * 
-                                        FROM inmueble_anticretico iv INNER JOIN foto_anticretico ft
-                                            ON (iv.id_anticretico = ft.anticretico_id_anticretico) INNER JOIN agente_venta av
-                                                ON iv.agente_venta_id_agente_venta = av.id_agente_venta
-                                        WHERE  anticretico_id_anticretico = $contador";
-                                        #WHERE  anticretico_id_anticretico = $contador AND agente_venta_id_agente_venta = $id_agente";
-                $resultadoInterno = mysqli_query($conexion, $consultaInterna);
-                $numeroInterno = $resultadoInterno->num_rows;
-                if ($numeroInterno != 0) {
-            ?>
-                    <div class="row">
-                        <div class="col-md-12" style="background-position: center;" id="iner<?= $i ?>">
-                            <br>
-                            <!-- <h3>
-                                    <?//php echo "Este es el i ".$i."<br>este es el contador ".$contador;?>
-                                </h3> -->
-                            <div class="row tiempo" style="border-style: inset; border-color: burlywood; margin-left: 0;margin-right: 0;">
-                                <div class="col-md-8" style="margin-right: 0; margin-top: 0;margin-left: 0; padding: 0px;">
-                                    <div id="carouselExampleIndicators<?php echo $i ?>" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <?php
-                                            for ($j = 1; $j <= $numeroInterno; $j++) {
-                                                $mostrar = mysqli_fetch_array($resultadoInterno);
-                                            ?>
-                                                <div class="carousel-item <?php if ($j == 1) {
-                                                                                echo 'active';
-                                                                            } ?>">
-                                                    <div style="background-color: white;" align="center" id="cajaFoto">
-                                                        <!-- <img src="data:image/jpg;base64,<?php //echo base64_encode($mostrar['foto']);
-                                                                                                ?>" height="100%" class="kol"/> -->
-                                                        <img src="<?php echo "../anticretico/" . $mostrar['foto'] ?>" alt="Aqui va la imagen" height="100%" class="d-block">
-                                                    </div>
-                                                    <div class="carousel-caption" style="margin-top: 0;">
-                                                        <!-- <a href="#" class="btn btn-danger"><i class="fa fa-cut"></i> mas info</a> -->...
-                                                    </div>
+            }
+
+            $i = 1 ;
+
+            while($datosAnticretico = mysqli_fetch_array($resultadoNewAnticretico)){
+            ?> 
+            <div class="row">
+                <div class="col-md-12" style="background-position: center;" id="iner<?= $i ?>">
+                    <br>
+                    <!-- <h3>
+                            <?//php echo "Este es el i ".$i."<br>este es el contador ".$contador;?>
+                        </h3> -->
+                    <div class="row tiempo" style="border-style: inset; border-color: burlywood; margin-left: 0;margin-right: 0;">
+                        <div class="col-md-8" style="margin-right: 0; margin-top: 0;margin-left: 0; padding: 0px;">
+                            <div id="carouselExampleIndicatorsAnticretico<?php echo $i ?>" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+
+                                    <?php
+                                        $id = $datosAnticretico['id_anticretico'];
+
+                                        $queryFotosAnticretico = "SELECT *  FROM foto_anticretico WHERE anticretico_id_anticretico = $id";
+
+                                        $ressultadoFotosAnticretico = mysqli_query($conexion, $queryFotosAnticretico);
+
+                                        $j = 1 ;
+
+                                        while($datosFotosAnticretico = mysqli_fetch_array($ressultadoFotosAnticretico)){
+                                        ?>
+                                            <div class="carousel-item <?php if ($j == 1) {echo 'active';} ?>">
+                                                <div style="background-color: white;" align="center" id="cajaFoto">
+                                                    <!-- <img src="data:image/jpg;base64,<?php //echo base64_encode($mostrar['foto']);
+                                                                                            ?>" height="100%" class="kol"/> -->
+                                                    <img src="<?php echo "../anticretico/" . $datosFotosAnticretico['foto'] ?>" alt="Aqui va la imagen" height="100%" class="d-block">
                                                 </div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
-                                        <!-- Controls -->
-                                        <a class="carousel-control-prev" href="#carouselExampleIndicators<?php echo $i ?>" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <div class="carousel-caption" style="margin-top: 0;">
+                                                    <!-- <a href="#" class="btn btn-danger"><i class="fa fa-cut"></i> mas info</a> -->...
+                                                </div>
+                                            </div>
+                                        <?php
+                                        $j++;
+                                        }
+                                    ?>
+                                </div>
+                                <!-- Controls -->
+                                <a class="carousel-control-prev" href="#carouselExampleIndicatorsAnticretico<?php echo $i ?>" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicatorsAnticretico<?php echo $i ?>" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                                <!-- <a class="left carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="prev">
+                                            <i class="fa fa-chevron-circle-left" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 ;"></i>
                                             <span class="sr-only">Previous</span>
                                         </a>
-                                        <a class="carousel-control-next" href="#carouselExampleIndicators<?php echo $i ?>" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <a class="right carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="next">
+                                            <i class="fa fa-chevron-circle-right" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 "></i>
                                             <span class="sr-only">Next</span>
-                                        </a>
-                                        <!-- <a class="left carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="prev">
-                                                    <i class="fa fa-chevron-circle-left" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 ;"></i>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="right carousel-control" href="#carousel-example-generic<?php echo $i ?>" role="button" data-slide="next">
-                                                    <i class="fa fa-chevron-circle-right" aria-hidden="true" style="margin-top: 120px; color: #2CFF00 "></i>
-                                                    <span class="sr-only">Next</span>
-                                                </a> -->
-                                    </div>
-                                </div>
-                                <div class="col-md-4 kol" style=" background-color: white; opacity: 0.7; color: black; margin-top: 0;">
-                                    <h2 style="color: black;"> <?php echo $mostrar['inmueble'] . " en " . $mostrar['tipo']; ?></h2>
-                                    <p>
-                                    <h4>
-                                        <i class="fa fa-map-marker" aria-hidden="true" style="color: #FF0000 ;"></i> En la Zona <?php echo $mostrar['zona'] ?><br>
-                                        <i class="fa fa-eraser" aria-hidden="true" style="color: ;"></i> <?php echo $mostrar['metraje'] ?>m<sup>2</sup> <br>
-                                        <!-- <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php //echo $mostrar['dormitorio']
-                                                                                                                    ?> dormitorios<br> -->
-                                        <?php
-                                        if ($mostrar['dormitorio'] > 0) {
-                                            if ($mostrar['dormitorio'] == 1) {
-                                        ?>
-                                                <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $mostrar['dormitorio'] ?> dormitorio<br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $mostrar['dormitorio'] ?> dormitorios<br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['cocina'] > 0) {
-                                            if ($mostrar['cocina'] == 1) {
-                                        ?>
-                                                <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $mostrar['cocina'] ?> cocina <br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $mostrar['cocina'] ?> cocinas <br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['7'] > 0) {
-                                            if ($mostrar['7'] == 1) {
-                                        ?>
-                                                <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $mostrar['7'] ?> baño<br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $mostrar['7'] ?> baños<br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['baulera'] > 0) {
-                                            if ($mostrar['baulera'] == 1) {
-                                        ?>
-                                                <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $mostrar['baulera'] ?> baulera<br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $mostrar['baulera'] ?> bauleras<br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['lavanderia'] > 0) {
-                                            if ($mostrar['lavanderia'] == 1) {
-                                        ?>
-                                                <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $mostrar['lavanderia'] ?> Lavanderia <br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $mostrar['lavanderia'] ?> Lavanderias <br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($mostrar['garaje'] > 0) {
-                                            if ($mostrar['garaje'] == 1) {
-                                        ?>
-                                                <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $mostrar['garaje'] ?> parqueo <br>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $mostrar['garaje'] ?> parqueo <br>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $mostrar['garantia'] ?>
-                                    </h4>
-                                    <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($mostrar['precio']) . " " . $mostrar['cambio']; ?> </b></h3>
-                                    </p>
-                                    <?php
-                                    if($_SESSION['nivel'] == 1){
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <a href="eliminarInmueble.php?id_inmueble=<?= $mostrar['id_anticretico'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $mostrar['id_anticretico'] ?>&inmueble=<?= $mostrar['inmueble'] ?>&tipo=<?= $mostrar['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                                        </div>
-                                    </div>
-                                    <div id="to-copy<?php echo $i ?>" class="d-none">
-                                        https://www.siai.com.bo/inmobiliaria/anticretico/mostrar.php<?php echo "?id=" . $mostrar['id_anticretico'] . "&" . "inmueble=" . $mostrar['inmueble']; ?>
-                                    </div>
-                                    <center>
-                                    <br>
-                                    <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
-                                    <a href="<?php echo "../" . $mostrar['tipo'] . "/" . $mostrar['pdf'] ?>" download="<?php echo "browsour" . $mostrar['inmueble'] . $mostrar['id_anticretico'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
-                                    <?php
-                                    if ($mostrar['pdf'] != NULL) {
-                                    ?>
-                                        <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
+                                        </a> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4 kol" style=" background-color: white; opacity: 0.7; color: black; margin-top: 0;">
+                            <h2 style="color: black;"> <?php echo $datosAnticretico['inmueble'] . " en " . $datosAnticretico['tipo']; ?></h2>
+                            <p>
+                            <h4>
+                                <i class="fa fa-map-marker" aria-hidden="true" style="color: #FF0000 ;"></i> En la Zona <?php echo $datosAnticretico['zona'] ?><br>
+                                <i class="fa fa-eraser" aria-hidden="true" style="color: ;"></i> <?php echo $datosAnticretico['metraje'] ?>m<sup>2</sup> <br>
+                                <!-- <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php //echo $datosAnticretico['dormitorio']
+                                                                                                            ?> dormitorios<br> -->
+                                <?php
+                                if ($datosAnticretico['dormitorio'] > 0) {
+                                    if ($datosAnticretico['dormitorio'] == 1) {
+                                ?>
+                                        <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $datosAnticretico['dormitorio'] ?> dormitorio<br>
                                     <?php
                                     } else {
                                     ?>
-                                        <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
-                                    <?php
+                                        <i class="fa fa-home" aria-hidden="true" style="color: #00FFE2;"></i> <?php echo $datosAnticretico['dormitorio'] ?> dormitorios<br>
+                                <?php
                                     }
-                                    ?>
-                                    </center>
-                                    <br>
+                                }
+                                ?>
+                                <?php
+                                if ($datosAnticretico['cocina'] > 0) {
+                                    if ($datosAnticretico['cocina'] == 1) {
+                                ?>
+                                        <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $datosAnticretico['cocina'] ?> cocina <br>
                                     <?php
-                                    }
+                                    } else {
                                     ?>
+                                        <i class="fa fa-cutlery" aria-hidden="true"></i> <?php echo $datosAnticretico['cocina'] ?> cocinas <br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                <?php
+                                if ($datosAnticretico['7'] > 0) {
+                                    if ($datosAnticretico['7'] == 1) {
+                                ?>
+                                        <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $datosAnticretico['7'] ?> baño<br>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <i class="fa fa-bath" aria-hidden="true" style="color: ;"></i> <?php echo $datosAnticretico['7'] ?> baños<br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                <?php
+                                if ($datosAnticretico['baulera'] > 0) {
+                                    if ($datosAnticretico['baulera'] == 1) {
+                                ?>
+                                        <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $datosAnticretico['baulera'] ?> baulera<br>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <i class="fa fa-archive" aria-hidden="true" style="color:#FF9200;"></i> <?php echo $datosAnticretico['baulera'] ?> bauleras<br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                <?php
+                                if ($datosAnticretico['lavanderia'] > 0) {
+                                    if ($datosAnticretico['lavanderia'] == 1) {
+                                ?>
+                                        <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $datosAnticretico['lavanderia'] ?> Lavanderia <br>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo $datosAnticretico['lavanderia'] ?> Lavanderias <br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                <?php
+                                if ($datosAnticretico['garaje'] > 0) {
+                                    if ($datosAnticretico['garaje'] == 1) {
+                                ?>
+                                        <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $datosAnticretico['garaje'] ?> parqueo <br>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <i class="fa fa-car" aria-hidden="true" style="color: blue;"></i> <?php echo $datosAnticretico['garaje'] ?> parqueo <br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                <i class="fa fa-bookmark" aria-hidden="true"></i> <?php echo $datosAnticretico['garantia'] ?>
+                            </h4>
+                            <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($datosAnticretico['precio']) . " " . $datosAnticretico['cambio']; ?> </b></h3>
+                            </p>
+                            <?php
+                            if($_SESSION['nivel'] == 1){
+                            ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="eliminarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                </div>
+                            </div>
+                            <div id="to-copy<?php echo $i ?>" class="d-none">
+                                https://www.siai.com.bo/inmobiliaria/anticretico/mostrar.php<?php echo "?id=" . $datosAnticretico['id_anticretico'] . "&" . "inmueble=" . $datosAnticretico['inmueble']; ?>
+                            </div>
+                            <center>
+                            <br>
+                            <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
+                            <a href="<?php echo "../" . $datosAnticretico['tipo'] . "/" . $datosAnticretico['pdf'] ?>" download="<?php echo "browsour" . $datosAnticretico['inmueble'] . $datosAnticretico['id_anticretico'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
+                            <?php
+                            if ($datosAnticretico['pdf'] != NULL) {
+                            ?>
+                                <h1><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h1>
+                            <?php
+                            } else {
+                            ?>
+                                <h1><i class="fa fa-window-close" aria-hidden="true"></i></h1>
+                            <?php
+                            }
+                            ?>
+                            </center>
+                            <br>
+                            <?php
+                            }
+                            ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary btn-block" type="button" onClick="downloadImage('<?=$datosAnticretico['id_anticretico']?>','<?=$datosAnticretico['tipo']?>')"><i class="fa fa-download"></i> Descargar Imagenes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br><br>
-        <?php
-                    $i++;
-                }
-                $contador++;
+                </div>
+            </div>
+            <?php
             }
-        }
-        ?>
+            ?>
+        </div>
+        
         <!-- END INMUEBLES EN ANTICRETICO -->
     </div>
 
