@@ -255,6 +255,15 @@ include("../seguridad.php");
                     <li class="nav-item active">
                         <a class="nav-link" href="#" onclick="buscarInmuble()">Buscar Inmueble <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="excelAlquiler.php">Exportar Excel Alquiler <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="excelAnticretico.php">Exportar Excel Anticretico <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="excelVenta.php">Exportar Excel Venta <span class="sr-only">(current)</span></a>
+                    </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>

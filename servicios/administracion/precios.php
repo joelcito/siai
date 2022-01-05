@@ -26,7 +26,7 @@
         <br>
         <div class="titulo">
             <h1>
-                PRECIOS Y TARIFAS DE LA GESTION 2021
+                PRECIOS Y TARIFAS DE LA GESTION <?=date('Y')?>
             </h1>
         </div>
         <div class="table-responsive">
