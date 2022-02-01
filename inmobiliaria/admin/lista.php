@@ -301,8 +301,10 @@ include("../seguridad.php");
 
                 if(isset($_GET['zona'])){
                     $zona = implode("','",$_GET['zona']);
-                    $queryNewAlquiler.=" WHERE zona IN('".$zona."')";
+                    $queryNewAlquiler.=" WHERE zona IN('".$zona."') AND eliminado is null";
                 }
+
+                $queryNewAlquiler.=" WHERE eliminado is null";
 
                 $resultadoNewAlquiler = mysqli_query($conexion, $queryNewAlquiler);
 
@@ -470,11 +472,16 @@ include("../seguridad.php");
                                     if($_SESSION['nivel'] == 1 ){
                                     ?>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <a href="eliminarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                            
+                                            <div class="col-md-4">
+                                                <!-- <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>"> Editar</a> -->
                                             </div>
-                                            <div class="col-md-6">
-                                                <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                            <div class="col-md-4">
+                                                <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>">Vendido</a>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- <a href="eliminarInmueble.php?id_inmueble=<?= $datosAlquiler['id_alquiler'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a> -->
+                                                <button class="btn btn-danger btn-block" onclick="eliminar('<?=$datosAlquiler['id_alquiler']?>', '<?=$datosAlquiler['inmueble']?>','<?=$datosAlquiler['tipo']?>')">Eliminar</button>
                                             </div>
                                             <!-- <div class="col-md-3" style="float: none;">
                                                 <div class="row">
@@ -501,10 +508,10 @@ include("../seguridad.php");
                                                         <center><a class="copi" href='javascript:getlink();'>Copiar, avisar y desaparecer</a></center> -->
                                             </div>
                                         </div>
-                                        <div id="to-copy<?php echo $i ?>" class="d-none">
+                                        <!-- <div id="to-copy<?php echo $i ?>" class="d-none">
                                             https://www.siai.com.bo/inmobiliaria/venta/mostrar.php<?php echo "?id=" . $datosAlquiler['id_venta'] . "&" . "inmueble=" . $datosAlquiler['inmueble']; ?>
-                                        </div>
-                                        <center>
+                                        </div> -->
+                                        <!-- <center>
                                             <br>
                                             <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
                                             <a href="<?php echo "../" . $datosAlquiler['tipo'] . "/" . $datosAlquiler['pdf'] ?>" download="<?php echo "browsour" . $datosAlquiler['inmueble'] . $datosAlquiler['id_venta'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
@@ -519,7 +526,7 @@ include("../seguridad.php");
                                             <?php
                                             }
                                             ?>
-                                        </center>
+                                        </center> -->
                                         <br>
                                     <?php
                                     }
@@ -581,8 +588,10 @@ include("../seguridad.php");
 
             if(isset($_GET['zona'])){
                 $zona = implode("','",$_GET['zona']);
-                $queryNewVenta.=" WHERE zona IN('".$zona."')";
+                $queryNewVenta.=" WHERE zona IN('".$zona."') AND eliminado is null";
             }
+
+            $queryNewVenta.=" WHERE eliminado is null";
 
             $resultadoNewVenta = mysqli_query($conexion, $queryNewVenta);
 
@@ -750,11 +759,14 @@ include("../seguridad.php");
                                 if($_SESSION['nivel'] == 1 ){
                                 ?>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <a href="eliminarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                        <div class="col-md-4">
+                                            <!-- <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>"> Editar</a> -->
                                         </div>
-                                        <div class="col-md-6">
-                                            <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                        <div class="col-md-4">
+                                            <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>">Vendido</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-danger btn-block" onclick="eliminar('<?=$datosVenta['id_venta']?>', '<?=$datosVenta['inmueble']?>','<?=$datosVenta['tipo']?>')">Eliminar</button>
                                         </div>
                                         <!-- <div class="col-md-3" style="float: none;">
                                             <div class="row">
@@ -830,8 +842,10 @@ include("../seguridad.php");
 
             if(isset($_GET['zona'])){
                 $zona = implode("','",$_GET['zona']);
-                $queryNewAnticretico.=" WHERE zona IN('".$zona."')";
+                $queryNewAnticretico.=" WHERE zona IN('".$zona."') AND eliminado is null";
             }
+
+            $queryNewAnticretico.=" WHERE eliminado is null";
 
             $resultadoNewAnticretico = mysqli_query($conexion, $queryNewAnticretico);
 
@@ -999,17 +1013,20 @@ include("../seguridad.php");
                             if($_SESSION['nivel'] == 1){
                             ?>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <a href="eliminarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                <div class="col-md-4">
+                                    <!-- <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>"> Editar</a> -->
                                 </div>
-                                <div class="col-md-6">
-                                    <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                                <div class="col-md-4">
+                                    <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>">Vendido</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-danger btn-block" onclick="eliminar('<?=$datosAnticretico['id_anticretico']?>', '<?=$datosAnticretico['inmueble']?>','<?=$datosAnticretico['tipo']?>')">Eliminar</button>
                                 </div>
                             </div>
-                            <div id="to-copy<?php echo $i ?>" class="d-none">
+                            <!-- <div id="to-copy<?php echo $i ?>" class="d-none">
                                 https://www.siai.com.bo/inmobiliaria/anticretico/mostrar.php<?php echo "?id=" . $datosAnticretico['id_anticretico'] . "&" . "inmueble=" . $datosAnticretico['inmueble']; ?>
-                            </div>
-                            <center>
+                            </div> -->
+                            <!-- <center>
                             <br>
                             <button onClick='CopyToClipboard("to-copy<?php echo $i ?>")' class="boton2">Copiar Link del Inmueble</button>
                             <a href="<?php echo "../" . $datosAnticretico['tipo'] . "/" . $datosAnticretico['pdf'] ?>" download="<?php echo "browsour" . $datosAnticretico['inmueble'] . $datosAnticretico['id_anticretico'] . ".pdf"; ?>" target="_blank">Descargar browsour</a>
@@ -1024,7 +1041,7 @@ include("../seguridad.php");
                             <?php
                             }
                             ?>
-                            </center>
+                            </center> -->
                             <br>
                             <?php
                             }
@@ -1064,6 +1081,11 @@ include("../seguridad.php");
   <!-- Page level custom scripts -->
   <script src="../js/demo/chart-area-demo.js"></script>
   <script src="../js/demo/chart-pie-demo.js"></script>
+
+  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <?php
 // include("../footer.php");
 ?>
@@ -1166,6 +1188,45 @@ include("../seguridad.php");
         $('#modal-busca-inmueble').modal('show');
     }
 
+    function eliminar(id, inmueble, tipo){
+
+        Swal.fire({
+        title: 'Estas seguro de eliminar '+inmueble+' en '+tipo+' ?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#7FC869',
+        cancelButtonColor: '#FF0000',
+        confirmButtonText: '¡Sí, bórralo!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+
+            // elimina_edificio(id_paciente);
+            parametros = { 
+                "id_inmueble":id ,
+                "inmueble": inmueble,
+                "tipo" : tipo
+            }
+            $.ajax({
+                data:parametros,
+                url:'eliminaInmuebleborrado.php',
+                type:'GET',
+                beforeSend:function(){},
+                success:function(){
+                    // table.ajax.reload();
+                    Swal.fire(
+                    '¡Eliminado!',
+                    'Su archivo ha sido eliminado.',
+                    'success'
+                    )
+
+                    location.reload();
+                }
+            });
+
+        }
+        })
+    }
     // function buscar(){
     //     let valoresCheck = [];
 
