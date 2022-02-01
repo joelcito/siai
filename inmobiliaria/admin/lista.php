@@ -1,6 +1,13 @@
 
 <?php
-include("../seguridad.php");
+    include '../seguridad.php';
+    // session_start();
+
+    // echo  var_dump($_SESSION);
+
+    // echo $_SESSION['nombre'] . " " . $_SESSION['paterno']. " " .$_SESSION['nivel'];
+
+    // exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +19,7 @@ include("../seguridad.php");
   <meta name="description" content="">
   <meta name="author" content="Joel Jonathan Flores Quispe">
 
-  <title>Administracion</title>
+  <title>Inmuebles | Listado</title>
   <!-- Custom fonts for this template-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -302,13 +309,14 @@ include("../seguridad.php");
                 if(isset($_GET['zona'])){
                     $zona = implode("','",$_GET['zona']);
                     $queryNewAlquiler.=" WHERE zona IN('".$zona."') AND eliminado is null";
+                }else{
+                    $queryNewAlquiler.=" WHERE eliminado is null";
                 }
-
-                $queryNewAlquiler.=" WHERE eliminado is null";
 
                 $resultadoNewAlquiler = mysqli_query($conexion, $queryNewAlquiler);
 
                 $cantidadBusquedaNewALquiler = $resultadoNewAlquiler->num_rows;
+
                 if($cantidadBusquedaNewALquiler > 0 ){
                 ?>
                 <center>
@@ -469,17 +477,18 @@ include("../seguridad.php");
                                     <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($datosAlquiler['precio']) . " " . $datosAlquiler['cambio']; ?> </b></h3>
                                     </p>
                                     <?php
-                                    if($_SESSION['nivel'] == 1 ){
+                                    // echo "<h1> nivel ->" .var_dump($_SESSION)."</h1>";
+                                    // if($_SESSION['nivel'] == 1 ){
                                     ?>
                                         <div class="row">
                                             
-                                            <div class="col-md-4">
-                                                <!-- <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>"> Editar</a> -->
+                                            <!-- <div class="col-md-4">
+                                                <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>"> Editar</a>
                                             </div>
                                             <div class="col-md-4">
                                                 <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAlquiler['id_venta'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>">Vendido</a>
-                                            </div>
-                                            <div class="col-md-4">
+                                            </div> -->
+                                            <div class="col-md-12">
                                                 <!-- <a href="eliminarInmueble.php?id_inmueble=<?= $datosAlquiler['id_alquiler'] ?>&inmueble=<?= $datosAlquiler['inmueble'] ?>&tipo=<?= $datosAlquiler['tipo'] ?>" class="btn btn-danger btn-block"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a> -->
                                                 <button class="btn btn-danger btn-block" onclick="eliminar('<?=$datosAlquiler['id_alquiler']?>', '<?=$datosAlquiler['inmueble']?>','<?=$datosAlquiler['tipo']?>')">Eliminar</button>
                                             </div>
@@ -529,7 +538,7 @@ include("../seguridad.php");
                                         </center> -->
                                         <br>
                                     <?php
-                                    }
+                                    // }
                                     ?>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -589,9 +598,9 @@ include("../seguridad.php");
             if(isset($_GET['zona'])){
                 $zona = implode("','",$_GET['zona']);
                 $queryNewVenta.=" WHERE zona IN('".$zona."') AND eliminado is null";
+            }else{
+                $queryNewVenta.=" WHERE eliminado is null";
             }
-
-            $queryNewVenta.=" WHERE eliminado is null";
 
             $resultadoNewVenta = mysqli_query($conexion, $queryNewVenta);
 
@@ -756,16 +765,16 @@ include("../seguridad.php");
                                 <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($datosVenta['precio']) . " " . $datosVenta['cambio']; ?> </b></h3>
                                 </p>
                                 <?php
-                                if($_SESSION['nivel'] == 1 ){
+                                // if($_SESSION['nivel'] == 1 ){
                                 ?>
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <!-- <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>"> Editar</a> -->
+                                        <!-- <div class="col-md-4">
+                                            <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>"> Editar</a>
                                         </div>
                                         <div class="col-md-4">
                                             <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosVenta['id_venta'] ?>&inmueble=<?= $datosVenta['inmueble'] ?>&tipo=<?= $datosVenta['tipo'] ?>">Vendido</a>
-                                        </div>
-                                        <div class="col-md-4">
+                                        </div> -->
+                                        <div class="col-md-12">
                                             <button class="btn btn-danger btn-block" onclick="eliminar('<?=$datosVenta['id_venta']?>', '<?=$datosVenta['inmueble']?>','<?=$datosVenta['tipo']?>')">Eliminar</button>
                                         </div>
                                         <!-- <div class="col-md-3" style="float: none;">
@@ -814,7 +823,7 @@ include("../seguridad.php");
                                     </center>
                                     <br>
                                 <?php
-                                }
+                                // }
                                 ?>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -843,9 +852,9 @@ include("../seguridad.php");
             if(isset($_GET['zona'])){
                 $zona = implode("','",$_GET['zona']);
                 $queryNewAnticretico.=" WHERE zona IN('".$zona."') AND eliminado is null";
+            }else{
+                $queryNewAnticretico.=" WHERE eliminado is null";
             }
-
-            $queryNewAnticretico.=" WHERE eliminado is null";
 
             $resultadoNewAnticretico = mysqli_query($conexion, $queryNewAnticretico);
 
@@ -1010,16 +1019,16 @@ include("../seguridad.php");
                             <h3><i class="fa fa-money" aria-hidden="true" style="color: #3FFF00 ;"></i><b> <?php echo number_format($datosAnticretico['precio']) . " " . $datosAnticretico['cambio']; ?> </b></h3>
                             </p>
                             <?php
-                            if($_SESSION['nivel'] == 1){
+                            // if($_SESSION['nivel'] == 1){
                             ?>
                             <div class="row">
-                                <div class="col-md-4">
-                                    <!-- <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>"> Editar</a> -->
+                                <!-- <div class="col-md-4">
+                                    <a class="btn btn-info btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>"> Editar</a>
                                 </div>
                                 <div class="col-md-4">
                                     <a class="btn btn-warning btn-block" href="editarInmueble.php?id_inmueble=<?= $datosAnticretico['id_anticretico'] ?>&inmueble=<?= $datosAnticretico['inmueble'] ?>&tipo=<?= $datosAnticretico['tipo'] ?>">Vendido</a>
-                                </div>
-                                <div class="col-md-4">
+                                </div> -->
+                                <div class="col-md-12">
                                     <button class="btn btn-danger btn-block" onclick="eliminar('<?=$datosAnticretico['id_anticretico']?>', '<?=$datosAnticretico['inmueble']?>','<?=$datosAnticretico['tipo']?>')">Eliminar</button>
                                 </div>
                             </div>
@@ -1044,7 +1053,7 @@ include("../seguridad.php");
                             </center> -->
                             <br>
                             <?php
-                            }
+                            // }
                             ?>
                             <div class="row">
                                 <div class="col-md-12">

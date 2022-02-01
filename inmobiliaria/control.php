@@ -12,6 +12,7 @@
     if (mysqli_num_rows($resultado) != 0) {
             session_start();
             $_SESSION['ingreso'] = 'si';
+
             if ($dato = mysqli_fetch_array($resultado)) {
                 $_SESSION['nivel'] = $dato['nivel'];
                 $_SESSION['nombre'] = $dato['nombres'];
